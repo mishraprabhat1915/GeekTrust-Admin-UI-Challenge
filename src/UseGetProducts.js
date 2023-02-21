@@ -14,12 +14,12 @@ const useGetProducts = () => {
     setLoading(true);
     try {
       const res = await axios.get(endpoint);
-      let usersData = res.data.map((user) => ({
-        ...user,
-        available: true,
-        selected: false,
-      }));
-      setData(usersData);
+      // let usersData = res.data.map((user) => ({
+      //   ...user,
+      //   available: true,
+      //   selected: false,
+      // }));
+      setData(res.data);
     } catch (error) {
       console.log(error);
     }

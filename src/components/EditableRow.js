@@ -4,11 +4,18 @@ const EditableRow = ({
   editFormData,
   handleEditFormChange,
   handleCancelClick,
+  handleSelect,
 }) => {
   return (
     <tr className="data-row editable-mode" key={editFormData.id}>
       <td>
-        <input type="checkbox" className="btn-checkbox" />
+        <input
+          type="checkbox"
+          className="btn-checkbox"
+          name={editFormData.name}
+          checked={editFormData?.isChecked || false}
+          onChange={handleSelect}
+        />
       </td>
       <td>
         <input

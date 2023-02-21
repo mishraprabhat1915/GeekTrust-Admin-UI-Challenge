@@ -1,10 +1,21 @@
 import React from "react";
 import "../App.css";
-const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick }) => {
+const ReadOnlyRow = ({
+  contact,
+  handleEditClick,
+  handleDeleteClick,
+  handleSelect,
+}) => {
   return (
     <tr className="data-row" key={contact.id}>
       <td>
-        <input type="checkbox" className="btn-checkbox" />
+        <input
+          type="checkbox"
+          className="btn-checkbox"
+          name={contact.name}
+          checked={contact?.isChecked || false}
+          onChange={handleSelect}
+        />
       </td>
       <td>{contact.name}</td>
       <td>{contact.email}</td>

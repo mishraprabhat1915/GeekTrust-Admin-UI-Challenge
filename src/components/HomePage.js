@@ -16,6 +16,7 @@ const HomePage = ({
   handleEditFormSubmit,
   editContactId,
   handleEditFormChange,
+  handleSelect,
 }) => {
   return (
     <>
@@ -32,7 +33,16 @@ const HomePage = ({
           <thead className="header-container" align="left">
             <tr className="header-row">
               <th>
-                <input type="checkbox" className="btn-checkbox" />
+                <input
+                  type="checkbox"
+                  className="btn-checkbox"
+                  name="allSelect"
+                  checked={
+                    contacts.filter((user) => user?.isChecked !== true).length <
+                    1
+                  }
+                  onChange={handleSelect}
+                />
               </th>
               <th>Name</th>
               <th>Email</th>
@@ -41,36 +51,36 @@ const HomePage = ({
             </tr>
           </thead>
           <tbody className="data-container">
-            {contacts.length > 0 ? (
-              contacts
-                .slice(page * 10 - 10, page * 10)
-                .filter((item) => {
-                  return search.toLocaleLowerCase() === ""
-                    ? item
-                    : item.name.toLocaleLowerCase().includes(search) ||
-                        item.email.toLocaleLowerCase().includes(search) ||
-                        item.role.toLocaleLowerCase().includes(search);
-                })
-                .map((contact) => (
-                  <>
-                    {editContactId === contact.id ? (
-                      <EditableRow
-                        editFormData={editFormData}
-                        handleEditFormChange={handleEditFormChange}
-                        handleCancelClick={handleCancelClick}
-                      />
-                    ) : (
-                      <ReadOnlyRow
-                        contact={contact}
-                        handleEditClick={handleEditClick}
-                        handleDeleteClick={handleDeleteClick}
-                      />
-                    )}
-                  </>
-                ))
-            ) : (
-              "no data"
-            )}
+            {contacts.length > 0
+              ? contacts
+                  .slice(page * 10 - 10, page * 10)
+                  .filter((item) => {
+                    return search.toLocaleLowerCase() === ""
+                      ? item
+                      : item.name.toLocaleLowerCase().includes(search) ||
+                          item.email.toLocaleLowerCase().includes(search) ||
+                          item.role.toLocaleLowerCase().includes(search);
+                  })
+                  .map((contact) => (
+                    <>
+                      {editContactId === contact.id ? (
+                        <EditableRow
+                          editFormData={editFormData}
+                          handleEditFormChange={handleEditFormChange}
+                          handleCancelClick={handleCancelClick}
+                          handleSelect={handleSelect}
+                        />
+                      ) : (
+                        <ReadOnlyRow
+                          contact={contact}
+                          handleEditClick={handleEditClick}
+                          handleDeleteClick={handleDeleteClick}
+                          handleSelect={handleSelect}
+                        />
+                      )}
+                    </>
+                  ))
+              : "no data"}
           </tbody>
         </table>
       </form>

@@ -8,6 +8,7 @@ const App = () => {
   const [contacts, setContacts] = useState([]);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  // const [userSelected, setUserSelected] = useState([])
   useEffect(() => {
     if (data.length > 0) {
       setContacts(data);
@@ -89,6 +90,20 @@ const App = () => {
     }
   };
 
+  const handleSelect = (e) => {
+    const { name, checked } = e.target;
+    if (name === "allSelect") {
+      let tempUser = contacts.map((user) => {
+        return { ...user, isChecked: checked };
+      });
+      setContacts(tempUser);
+    } else {
+      const tempUser = contacts.map((user) =>
+        user.name === name ? { ...user, isChecked: checked } : user
+      );
+      setContacts(tempUser);
+    }
+  };
 
   return (
     <div className="app-container">
@@ -105,7 +120,7 @@ const App = () => {
         handleEditFormSubmit={handleEditFormSubmit}
         editContactId={editContactId}
         handleEditFormChange={handleEditFormChange}
-
+        handleSelect={handleSelect}
       />
     </div>
   );
