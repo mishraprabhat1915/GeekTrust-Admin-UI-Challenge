@@ -1,25 +1,24 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import useGetProducts from "./UseGetProducts";
-import ReadOnlyRow from "./components/ReadOnlyRow";
-import EditableRow from "./components/EditableRow";
+import HomePage from "./components/HomePage";
 
 const App = () => {
   const [data] = useGetProducts();
-  console.log(data)
+  const [contacts, setContacts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   useEffect(() => {
     if (data.length > 0) {
       setContacts(data);
     }
   }, [data]);
-  const [contacts, setContacts] = useState(data);
 
   const [editFormData, setEditFormData] = useState({
     name: "",
     role: "",
     email: "",
   });
-
   const [editContactId, setEditContactId] = useState(null);
 
   const handleEditFormChange = (event) => {
@@ -81,49 +80,33 @@ const App = () => {
     setContacts(newContacts);
   };
 
+  // handling pagination data
+
+  const handlePaginationButton = (data) => {
+    console.log(data);
+    if (data > 0 && data <= Math.ceil(contacts.length / 10) && data !== page) {
+      setPage(data);
+    }
+  };
+
+
   return (
     <div className="app-container">
-      <div className="search-container">
-        <input
-          type="search"
-          placeholder="Search by Name, Email and Role"
-          className="search-bar"
-        />
-      </div>
-      <form onSubmit={handleEditFormSubmit}>
-        <table className="table-container">
-          <thead className="header-container" align="left">
-            <tr className="header-row">
-              <th>
-                <input type="checkbox" className="btn-checkbox" />
-              </th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody className="data-container">
-            {contacts.map((contact) => (
-              <>
-                {editContactId === contact.id ? (
-                  <EditableRow
-                    editFormData={editFormData}
-                    handleEditFormChange={handleEditFormChange}
-                    handleCancelClick={handleCancelClick}
-                  />
-                ) : (
-                  <ReadOnlyRow
-                    contact={contact}
-                    handleEditClick={handleEditClick}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-                )}
-              </>
-            ))}
-          </tbody>
-        </table>
-      </form>
+      <HomePage
+        contacts={contacts}
+        handlePaginationButton={handlePaginationButton}
+        page={page}
+        search={search}
+        editFormData={editFormData}
+        handleDeleteClick={handleDeleteClick}
+        handleEditClick={handleEditClick}
+        handleCancelClick={handleCancelClick}
+        setSearch={setSearch}
+        handleEditFormSubmit={handleEditFormSubmit}
+        editContactId={editContactId}
+        handleEditFormChange={handleEditFormChange}
+
+      />
     </div>
   );
 };
