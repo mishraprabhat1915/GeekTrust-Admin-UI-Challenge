@@ -89,7 +89,7 @@ const App = () => {
       setPage(data);
     }
   };
-
+  // .slice(page * 10 - 10, page * 10)
   const handleSelect = (e) => {
     const { name, checked } = e.target;
     if (name === "allSelect") {

@@ -20,3 +20,10 @@
 .unselected_page{
     padding: .5rem 1rem;
 }
+
+.deleteAll-btn{
+    padding: .5rem 1.5rem;
+    background-color: rgb(218, 96, 96);
+    border-radius: 12px;
+    font-size: 15px;
+}

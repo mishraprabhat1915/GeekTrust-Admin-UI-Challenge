@@ -3,7 +3,14 @@ import "../css/Pagination.css";
 const Pagination = ({ contacts, handlePaginationButton, page }) => {
   return (
     <div className="main_container">
+      <button className="deleteAll-btn">Delete</button>
       <div className="pagination_container" key={contacts.id}>
+        <span
+          className="unselected_page"
+          onClick={() => handlePaginationButton(1)}
+        >
+          ⏮️
+        </span>
         <span
           className="unselected_page"
           onClick={() => handlePaginationButton(page - 1)}
@@ -26,6 +33,14 @@ const Pagination = ({ contacts, handlePaginationButton, page }) => {
           onClick={() => handlePaginationButton(page + 1)}
         >
           ▶️
+        </span>
+        <span
+          className="unselected_page"
+          onClick={() =>
+            handlePaginationButton(Math.ceil(contacts.length / 10))
+          }
+        >
+          ⏭️
         </span>
       </div>
     </div>
